@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toshkent viloyati "Toza hudud" DM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    :root {
+      --primary: #2a6d2a;
+      --primary-dark: #1e4d1e;
+      --primary-light: #e7f7e7;
+      --text: #222;
+      --text-light: #555;
+      --white: #ffffff;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    body {
+      background-color: #f6f9f6;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      padding: 5px 0;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: auto;
+      padding: 15px 20px;
+    }
+
+    nav .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    nav .logo img {
+      height: 45px;
+      transition: transform 0.3s;
+    }
+
+    nav .logo:hover img {
+      transform: scale(1.05);
+    }
+
+    nav .logo strong {
+      font-size: 1.3em;
+      color: var(--primary);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 600;
+      transition: 0.3s;
+      position: relative;
+      padding: 5px 0;
+    }
+
+    nav ul li a:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--primary-dark);
+      transition: width 0.3s;
+    }
+
+    nav ul li a:hover:after {
+      width: 100%;
+    }
+
+    nav ul li a:hover {
+      color: var(--primary-dark);
+    }
+
+    .mobile-menu {
+      display: none;
+      font-size: 1.5em;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 20px 60px;
+    }
+    
+    /* ИСПРАВЛЕНИЕ: Переопределяем стили для follow-us, чтобы он всегда был по центру и его содержимое было отцентрировано */
+    .follow-us {
+      max-width: 100%; /* Убираем ограничение в 1200px для этой секции */
+      padding-left: 20px; 
+      padding-right: 20px; 
+      /* Сброс центрирующего margin 0 auto, так как это полноширинный элемент */
+      margin-left: 0; 
+      margin-right: 0;
+      
+      text-align: center;
+      margin: 60px auto 40px; /* Сохраняем вертикальный margin и центрируем (хотя max-width: 100% не всегда требует auto) */
+    }
+    
+    /* ИСПРАВЛЕНИЕ: Явно центрируем текстовый блок внутри follow-us */
+    .follow-us-text {
+      max-width: 600px;
+      margin: 0 auto 30px; /* Центрируем сам блок текста */
+      color: var(--text-light);
+      font-size: 1.1em;
+    }
+
+    .hero {
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary-light), var(--white));
+      padding: 160px 20px 120px;
+      border-radius: 0 0 20px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.2)"/></svg>');
+      background-size: cover;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 2.5em;
+      color: var(--primary-dark);
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      color: var(--text);
+      max-width: 800px;
+      margin: 0 auto 30px;
+      animation: fadeInUp 1s ease 0.2s both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 1s ease 0.4s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(42, 109, 42, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: var(--white);
+      transform: translateY(-3px);
+    }
+
+    .section-title {
+      text-align: center;
+      color: var(--primary-dark);
+      margin-bottom: 50px;
+      font-size: 2.2em;
+      position: relative;
+    }
+
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--primary);
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 50px;
+    }
+
+    .about-text h3 {
+      color: var(--primary-dark);
+      margin-bottom: 20px;
+      font-size: 1.8em;
+    }
+
+    .about-text p {
+      margin-bottom: 15px;
+      color: var(--text-light);
+    }
+
+    .goals {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .goal-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      background: var(--primary-light);
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+
+    .goal-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .goal-icon {
+      font-size: 1.8em;
+      color: var(--primary);
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: var(--white);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--primary);
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .card i {
+      font-size: 2.5em;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      color: var(--primary-dark);
+      margin-bottom: 15px;
+      font-size: 1.4em;
+    }
+
+    .gallery-section {
+      text-align: center;
+    }
+
+    .gallery-description {
+      max-width: 800px;
+      margin: 0 auto 40px;
+      color: var(--text-light);
+      font-size: 1.1em;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
+      height: 250px;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.03);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      color: var(--white);
+      padding: 20px 15px 15px;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+    }
+
+    .gallery-item:hover .gallery-caption {
+      transform: translateY(0);
+    }
+
+    .contact {
+      background: var(--primary-light);
+      padding: 80px 20px;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      margin: 40px 0;
+    }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 30px;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      max-width: 400px;
+    }
+
+    .contact-item i {
+      font-size: 3em;
+      color: var(--primary);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin: 40px 0;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      background: var(--primary);
+      color: var(--white);
+      border-radius: 50%;
+      text-decoration: none;
+      transition: all 0.4s;
+      font-size: 2em;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-link:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .social-link:hover:before {
+      left: 100%;
+    }
+
+    .social-link:hover {
+      background: var(--primary-dark);
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 10px 25px rgba(42, 109, 42, 0.4);
+    }
+
+    .social-link.facebook {
+      background: #3b5998;
+    }
+
+    .social-link.facebook:hover {
+      background: #2d4373;
+    }
+
+    .social-link.telegram {
+      background: #0088cc;
+    }
+
+    .social-link.telegram:hover {
+      background: #006699;
+    }
+
+    .follow-us h3 {
+      color: var(--primary-dark);
+      margin-bottom: 30px;
+      font-size: 2em;
+    }
+
+    .follow-us-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    /* Стили для follow-us-text перемещены вверх для лучшего контроля центрирования */
+
+    .social-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .social-stat {
+      text-align: center;
+      padding: 15px;
+    }
+
+    .social-stat i {
+      font-size: 2.5em;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .social-stat p {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background: var(--primary-dark);
+      color: var(--white);
+      margin-top: 60px;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 1.2em;
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background: var(--primary-dark);
+      transform: translateY(-5px);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu {
+        display: block;
+      }
+
+      nav ul {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        flex-direction: column;
+        background: var(--white);
+        box-shadow: var(--shadow);
+        padding: 20px;
+        transition: left 0.3s;
+        gap: 15px;
+      }
+
+      nav ul.active {
+        left: 0;
+      }
+
+      .hero h1 {
+        font-size: 2em;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-btns {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+
+      .social-links {
+        gap: 15px;
+      }
+
+      .social-link {
+        width: 70px;
+        height: 70px;
+        font-size: 1.7em;
+      }
+
+      .social-stats {
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .social-link {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5em;
+      }
+      
+      .contact-item {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">
+        <img src="c:\Sayt Toza hudud\images\t h LOGO.jpg" alt="Toza hudud logotipi">
+        <strong>Toza hudud</strong>
+      </div>
+      <ul id="nav-menu">
+        <li><a href="#about">Biz haqimizda</a></li>
+        <li><a href="#services">Xizmatlar</a></li>
+        <li><a href="#gallery">Fotolavhalar</a></li>
+        <li><a href="#contact">Aloqa</a></li>
+      </ul>
+      <div class="mobile-menu" id="mobile-menu">
+        <i class="fas fa-bars"></i>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Toshkent viloyati "Toza hudud" davlat muassasasi</h1>
+      <p>Toshkent viloyati "Toza hudud" davlat muassasasi aholiga va tashkilotlarga ekologik toza xizmatlar ko'rsatishga, chiqindilarni to'g'ri yig'ish va qayta ishlashni targ'ib qilishga qaratilgan.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-primary">
+          <i class="fas fa-envelope"></i> Bog'lanish
+        </a>
+        <a href="#gallery" class="btn btn-outline">
+          <i class="fas fa-images"></i> Ishlarimiz
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2 class="section-title">Biz haqimizda</h2>
+    <div class="about-content">
+      <div class="about-text">
+        <h3>"Toza Hudud" davlat muassasasi haqida</h3>
+        <p>"Toza Hudud" davlat muassasasi — bu atrof muhit tozaligini ta'minlash, aholi uchun sog'lom va ozoda muhit yaratishga qaratilgan davlat tizimi. Bizning asosiy vazifamiz — chiqindilarni to'g'ri boshqarish, ularni qayta ishlash va tabiatga yetkaziladigan zararlarni kamaytirishdir.</p>
+        <p>Biz har kuni shahar va tumanlarda tozalikni ta'minlash, aholining yashash sharoiti va ekologik madaniyatini oshirish yo'lida sidqidildan mehnat qilamiz.</p>
+        <p>"Toza Hudud" — bu faqat tozalik xizmati emas, balki yam-yashil, sof va go'zal Vatan uchun mas'uliyatli yondashuv.</p>
+      </div>
+      <div class="about-image">
+        <img src="c:\Sayt Toza hudud\images\Plogging 1.1.jpg" alt="Toza hudud jamoasi" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px;">
+      </div>
+    </div>
+    
+    <h3 style="text-align: center; color: var(--primary-dark); margin: 40px 0 20px;">Bizning maqsadlarimiz</h3>
+    <div class="goals">
+      <div class="goal-item">
+        <div class="goal-icon">
+          <i class="fas fa-recycle"></i>
+        </div>
+        <div>
+          <h4>Chiqindilarni samarali boshqarish</h4>
+        </div>
+      </div>
+      <div class="goal-item">
+        <div class="goal-icon">
+          <i class="fas fa-industry"></i>
+        </div>
+        <div>
+          <h4>Qayta ishlashni rivojlantirish</h4>
+        </div>
+      </div>
+      <div class="goal-item">
+        <div class="goal-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <div>
+          <h4>Tabiatni muhofaza qilish</h4>
+        </div>
+      </div>
+      <div class="goal-item">
+        <div class="goal-icon">
+          <i class="fas fa-seedling"></i>
+        </div>
+        <div>
+          <h4>Yangi avlod uchun sof muhit yaratish</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <h2 class="section-title">Xizmatlar</h2>
+    <div class="services">
+      <div class="card">
+        <i class="fas fa-trash-alt"></i>
+        <h3>Chiqindilarni yig'ish</h3>
+        <p>Aholi va korxonalardan chiqindilarni muntazam yig'ish va olib chiqish xizmati.</p>
+      </div>
+      <div class="card">
+        <i class="fas fa-recycle"></i>
+        <h3>Qayta ishlash</h3>
+        <p>Atrof-muhitni muhofaza qilish maqsadida chiqindilarni qayta ishlash jarayonlari.</p>
+      </div>
+      <div class="card">
+        <i class="fas fa-broom"></i>
+        <h3>Tozalash ishlari</h3>
+        <p>Shahar va tuman hududlarini ekologik toza holatda saqlash uchun tozalash xizmatlari.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="gallery-section">
+    <h2 class="section-title">Fotolavhalar</h2>
+    <p class="gallery-description">♻️ World Cleanup Day 2025
+
+2025-yil 20-sentabr kuni Toshmori sohilida "Hayot uchun joy ajrating!" shiori ostida ommaviy plogging ekoaksiyasi o'tkazildi.
+
+Tadbirda "Toza hudud" davlat muassasasi xodimlari faol ishtirok etib, atrof-muhit tozaligini saqlash va ekologik madaniyatni oshirishga o'z hissasini qo'shdi.
+
+Shuningdek, Chiqindilarni boshqarish va sirkulyar agentligi tizimidagi "Toza hudud" davlat muassasasiga xizmat ko'rsatish sifatini yanada oshirish maqsadida yangi rusumli chiqindilarni tashish texnikalari tantanali ravishda topshirildi.
+
+Mazkur tashabbus ekologik barqarorlikni ta'minlash hamda tozalik xizmatlari samaradorligini oshirishga xizmat qiladi.</p>
+    
+    <div class="gallery">
+      <div class="gallery-item">
+        <img src="c:\Sayt Toza hudud\images\Plogging 1.1.jpg" alt="Plogging 2025">
+        <div class="gallery-caption">
+          <h4>Ommaviy hashar</h4>
+          <p>Hadoychilarga yangi mashinalar topshirish jarayoni</p>
+        </div>
+      </div>
+      
+      <div class="gallery-item">
+        <img src="c:\Sayt Toza hudud\images\Plogging .1.2.jpg" alt="Plogging 2025">
+        <div class="gallery-caption">
+          <h4>Ommaviy hashar</h4>
+          <p>Hadoychilarga yangi mashinalar topshirish jarayoni</p>
+        </div>
+      </div>
+      
+      <div class="gallery-item">
+        <img src="c:\Sayt Toza hudud\images\Plogging 1.6.jpg" alt="Plogging 2025">
+        <div class="gallery-caption">
+          <h4>Ommaviy hashar</h4>
+          <p>Hadoychilarga yangi mashinalar topshirish jarayoni</p>
+        </div>
+      </div>
+      
+      </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2 class="section-title">Aloqa</h2>
+    <p style="max-width: 600px; margin: 0 auto 40px; font-size: 1.1em;">Biz bilan bog'laning va Toshkent viloyatini toza tutishda hamkor bo'ling. Har qanday savol yoki taklifingiz bo'lsa, quyidagi kanallar orqali murojaat qilishingiz mumkin.</p>
+    
+    <div class="contact-info">
+      <div class="contact-item">
+        <i class="fab fa-telegram" style="font-size: 3.5em; color: #0088cc;"></i>
+        <h3>Telegram Bot</h3>
+        <p>Bizning Telegram bot orqali tez va qulay aloqa</p>
+        <a href="https://t.me/tozahududdmbot" target="_blank" class="btn btn-primary">
+          <i class="fab fa-telegram"></i> Botga o'tish
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="follow-us">
+    <h3>Bizni kuzatib boring</h3>
+    <div class="follow-us-content">
+      <p class="follow-us-text">Bizning faoliyatimiz, yangiliklarimiz va loyihalarimizni ijtimoiy tarmoqlarda kuzatib boring. Har kuni yangi fotolavhalar, videolar va foydali maslahatlar!</p>
+      
+      <div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=100022370654427" target="_blank" class="social-link facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://t.me/+RN6_CVosuHs1MDIy" target="_blank" class="social-link telegram">
+          <i class="fab fa-telegram"></i>
+        </a>
+      </div>
+      
+      <div class="social-stats">
+        <div class="social-stat">
+          <i class="fas fa-users"></i>
+          <p>1000+ obunachi</p>
+        </div>
+        <div class="social-stat">
+          <i class="fas fa-image"></i>
+          <p>Yangi fotolavhalar</p>
+        </div>
+        <div class="social-stat">
+          <i class="fas fa-newspaper"></i>
+          <p>Oxirgi yangiliklar</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Toshkent viloyati "Toza hudud" davlat muassasasi. Barcha huquqlar himoyalangan.</p>
+    <p style="margin-top: 10px; opacity: 0.8;">Tozalik va ozodalik yo'lida birgalikda harakat qilaylik!</p>
+  </footer>
+
+  <a href="#" class="back-to-top" id="back-to-top">
+    <i class="fas fa-chevron-up"></i>
+  </a>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navMenu = document.getElementById('nav-menu');
+    
+    mobileMenu.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+    
+    // Back to top button
+    const backToTop = document.getElementById('back-to-top');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTop.classList.add('visible');
+        document.querySelector('header').classList.add('scrolled');
+      } else {
+        backToTop.classList.remove('visible');
+        document.querySelector('header').classList.remove('scrolled');
+      }
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+          // Close mobile menu after click
+          navMenu.classList.remove('active');
+        }
+      });
+    });
+    
+    // Animation on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+    
+    // Observe elements for animation
+    document.querySelectorAll('.card, .gallery-item, .goal-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s, transform 0.5s';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
+
