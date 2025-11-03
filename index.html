@@ -120,23 +120,20 @@
       padding: 100px 20px 60px;
     }
     
-    /* ИСПРАВЛЕНИЕ: Переопределяем стили для follow-us, чтобы он всегда был по центру и его содержимое было отцентрировано */
     .follow-us {
-      max-width: 100%; /* Убираем ограничение в 1200px для этой секции */
+      max-width: 100%; 
       padding-left: 20px; 
       padding-right: 20px; 
-      /* Сброс центрирующего margin 0 auto, так как это полноширинный элемент */
       margin-left: 0; 
       margin-right: 0;
       
       text-align: center;
-      margin: 60px auto 40px; /* Сохраняем вертикальный margin и центрируем (хотя max-width: 100% не всегда требует auto) */
+      margin: 60px auto 40px; 
     }
     
-    /* ИСПРАВЛЕНИЕ: Явно центрируем текстовый блок внутри follow-us */
     .follow-us-text {
       max-width: 600px;
-      margin: 0 auto 30px; /* Центрируем сам блок текста */
+      margin: 0 auto 30px; 
       color: var(--text-light);
       font-size: 1.1em;
     }
@@ -288,6 +285,120 @@
       font-size: 1.8em;
       color: var(--primary);
     }
+
+    /* --- СТИЛИ ДЛЯ РУКОВОДСТВА (МОДИФИЦИРОВАННЫЕ) --- */
+    .leadership-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .leader-card {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 25px;
+      overflow: hidden;
+      text-align: left;
+      transition: transform 0.3s;
+      border-left: 5px solid var(--primary); 
+    }
+    
+    .leader-card.main-director {
+        text-align: center;
+        max-width: 700px; /* Шире для главного директора */
+        margin: 0 auto 50px; /* Центрируем и добавляем отступ снизу */
+        border-left: none; /* Убираем полосу, чтобы фото было основным акцентом */
+        border-bottom: 5px solid var(--primary);
+        padding: 0; /* Убираем padding, чтобы фото было от края до края */
+    }
+
+    .leader-card.main-director img {
+        width: 100%;
+        height: 350px; /* Высокое фото */
+        object-fit: cover;
+        border-radius: 12px 12px 0 0; /* Скругление только сверху */
+        margin-bottom: 0;
+    }
+
+    .leader-card.main-director .leader-info {
+        padding: 30px 25px; /* Возвращаем padding для текста */
+        text-align: center;
+    }
+
+    .leader-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .leader-info h4 {
+      color: var(--primary-dark);
+      margin-bottom: 5px;
+      font-size: 1.2em;
+    }
+
+    .leader-info p {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .leader-info .contact-link {
+        display: block;
+        margin-top: 10px;
+        color: var(--primary-dark);
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    
+    .leader-info .contact-link i {
+        margin-right: 5px;
+        color: var(--primary);
+    }
+    
+    .leader-info .contact-link:hover {
+        color: var(--text);
+    }
+    
+    .leader-info small {
+      display: block;
+      color: var(--text-light);
+      font-size: 0.9em;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed #eee;
+    }
+
+    .main-leadership-title {
+        margin-top: 60px;
+        margin-bottom: 20px;
+        font-size: 1.6em;
+        color: var(--primary-dark);
+        text-align: center;
+    }
+
+    .branch-leadership-title {
+        margin-top: 50px;
+        margin-bottom: 20px;
+        font-size: 1.6em;
+        color: var(--primary-dark);
+        text-align: center;
+    }
+    
+    /* Стили для заместителей под директором */
+    .deputy-directors-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+        max-width: 700px; /* Та же ширина, что у карточки директора */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* --- КОНЕЦ СТИЛЕЙ РУКОВОДСТВА --- */
 
     .services {
       display: grid;
@@ -494,8 +605,7 @@
       align-items: center;
       gap: 20px;
     }
-    /* Стили для follow-us-text перемещены вверх для лучшего контроля центрирования */
-
+    
     .social-stats {
       display: flex;
       justify-content: center;
@@ -624,6 +734,25 @@
       .social-stats {
         gap: 20px;
       }
+      
+      .leadership-grid {
+          grid-template-columns: 1fr;
+      }
+      
+      .main-leadership-title, .branch-leadership-title {
+          font-size: 1.4em;
+      }
+
+      .leader-card.main-director {
+          max-width: 100%;
+      }
+      .leader-card.main-director img {
+          height: 250px; /* Адаптация высоты фото для мобильных */
+      }
+      .deputy-directors-grid {
+          grid-template-columns: 1fr;
+          max-width: 100%;
+      }
     }
 
     @media (max-width: 480px) {
@@ -682,6 +811,7 @@
         <p>"Toza Hudud" davlat muassasasi — bu atrof muhit tozaligini ta'minlash, aholi uchun sog'lom va ozoda muhit yaratishga qaratilgan davlat tizimi. Bizning asosiy vazifamiz — chiqindilarni to'g'ri boshqarish, ularni qayta ishlash va tabiatga yetkaziladigan zararlarni kamaytirishdir.</p>
         <p>Biz har kuni shahar va tumanlarda tozalikni ta'minlash, aholining yashash sharoiti va ekologik madaniyatini oshirish yo'lida sidqidildan mehnat qilamiz.</p>
         <p>"Toza Hudud" — bu faqat tozalik xizmati emas, balki yam-yashil, sof va go'zal Vatan uchun mas'uliyatli yondashuv.</p>
+        <p style="font-weight: 500; margin-top: 20px;">Hususan, hozirgi kunda muassasa tasarrufida <strong>9 ta tuman shahar</strong> ya’ni Bekobod, Bo‘ka, Piskent, Oqqo‘rg‘on, Quyichirchiq, Chinoz, Yangiyo‘l, Zangiota tumanlari va Yangiyo‘l shahari filiallari bo‘lib, mazkur tuman shahar filiallari tomonidan jami <strong>222 ta MFYlar</strong> qamrab olingan va ularga xizmat qilib kelinmoqda.</p>
       </div>
       <div class="about-image">
         <img src="images\Plogging 1.1.jpg" alt="Toza hudud jamoasi" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px;">
@@ -723,7 +853,111 @@
         </div>
       </div>
     </div>
-  </section>
+    
+    <h2 class="section-title" style="margin-top: 80px;">Rahbariyat</h2>
+    
+    <h3 class="main-leadership-title">Toshkent viloyati "Toza hudud" Davlat muassasasi boshqarmasi</h3>
+    
+    <div class="leader-card main-director">
+        <img src="images\R.R.Sherzod.jpg" alt="Rustamjonov Sherzod Rustamjonovich">
+        <div class="leader-info">
+            <h4>Rustamjonov Sherzod Rustamjonovich</h4>
+            <p>Direktor</p>
+        </div>
+    </div>
+
+    <div class="deputy-directors-grid">
+        <div class="leader-card">
+            <div class="leader-info">
+                <h4>Musayev Ibroxim Erkinovich</h4>
+                <p>Bosh muxandis-direktor birinchi o'rinbosari</p>
+            </div>
+        </div>
+        
+        <div class="leader-card">
+            <div class="leader-info">
+                <h4>Salimov Farzodjon Anvar o'g'li</h4>
+                <p>Foydalanish bo'yicha direktor o'rinbosari</p>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="branch-leadership-title">Tuman/Shahar Filiallari Rahbariyati</h3>
+    <div class="leadership-grid">
+        
+        <div class="leader-card">
+            <div class="leader-info">
+                <h4><i class="fas fa-map-marker-alt"></i> Bekobod tumani Filiali</h4>
+                <p>Raxbari: Turdimurotov Baxrom Maxmudjonovich</p>
+                <small>Rahbar o'rinbosari: Mallayev Umairxo'ja Abdullayevich</small>
+            </div>
+        </div>
+        
+        <div class="leader-card">
+            <div class="leader-info">
+                <h4><i class="fas fa-map-marker-alt"></i> Bo'ka tumani Filiali</h4>
+                <p>Raxbari: Usmonqulov Bunoyod Turobovich</p>
+                <small>Rahbar o'rinbosari: Abidov Farrux Shuxratovich</small>
+            </div>
+        </div>
+        
+        <div class="leader-card">
+            <div class="leader-info">
+                <h4><i class="fas fa-map-marker-alt"></i> Piskent tumani Filiali</h4>
+                <p>Raxbari: Tursimatov Akrom Shavkatovich</p>
+                <small>Rahbar o'rinbosarlari: Akromov Oybek Jo'rayevich, Gulmatov Ulug'bek Shuxratovich</small>
+            </div>
+        </div>
+        
+        <div class="leader-card">
+            <div class="leader-info">
+                <h4><i class="fas fa-map-marker-alt"></i> Oqqo'rg'on tumani Filiali</h4>
+                <p>Raxbari: Mirzakulov Shuxrat Ummatkulovich</p>
+                <small>Rahbar o'rinbosari: Eshmanova Umida Furqatovna</small>
+            </div>
+        </div>
+        
+        <div class="leader-card">
+            <div class="leader-info">
+                <h4><i class="fas fa-map-marker-alt"></i> Quyichirchiq tumani Filiali</h4>
+                <p>Raxbari: Nurxo'jayev Marat Ziyavuddinxo'ja o'g'li</p>
+                <small>Rahbar o'rinbosari: Abdurasulov Oybek Abdujalolovich</small>
+            </div>
+        </div>
+        
+        <div class="leader-card">
+            <div class="leader-info">
+                <h4><i class="fas fa-map-marker-alt"></i> Yangiyo'l tumani Filiali</h4>
+                <p>Raxbari: Karimov Elmurod Abdulxakovich</p>
+                <small>O'rinbosar lavozimi bo'yicha ma'lumot yo'q</small>
+            </div>
+        </div>
+        
+        <div class="leader-card">
+            <div class="leader-info">
+                <h4><i class="fas fa-map-marker-alt"></i> Chinoz tumani Filiali</h4>
+                <p>Raxbari: Murtov Ulugʻbek Faxriddin oʻgʻli</p>
+                <small>Rahbar o'rinbosari: Axmadjonov Akmal Axmadjon o'g'li</small>
+            </div>
+        </div>
+        
+        <div class="leader-card">
+            <div class="leader-info">
+                <h4><i class="fas fa-map-marker-alt"></i> Yangiyo'l shahar Filiali</h4>
+                <p>Raxbari: Xakimjonov Zokirjon Rahimovich</p>         
+                <small>Rahbar o'rinbosari: Zaripov Jaxongir Gulomovich</small>
+            </div>
+        </div>
+        
+        <div class="leader-card">
+            <div class="leader-info">
+                <h4><i class="fas fa-map-marker-alt"></i> Zangiota tumani Filiali</h4>
+                <p>Raxbari: Tuyev Utkir Farmonovich</p>
+                <small>Rahbar o'rinbosari: Azizxo'jayev Izzatilla Alovudinxo'jayevich</small>
+            </div>
+        </div>
+    </div>
+    </section>
 
   <section id="services">
     <h2 class="section-title">Xizmatlar</h2>
@@ -786,7 +1020,7 @@ Mazkur tashabbus ekologik barqarorlikni ta'minlash hamda tozalik xizmatlari sama
       </div>
   </section>
 
-  <section id="contact" class="contact">
+   <section id="contact" class="contact">
     <h2 class="section-title">Aloqa</h2>
     <p style="max-width: 600px; margin: 0 auto 40px; font-size: 1.1em;">Biz bilan bog'laning va Toshkent viloyatini toza tutishda hamkor bo'ling. Har qanday savol yoki taklifingiz bo'lsa, quyidagi kanallar orqali murojaat qilishingiz mumkin.</p>
     
